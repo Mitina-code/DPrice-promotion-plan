@@ -85,12 +85,15 @@ section.sec{background:var(--surface);border:1px solid var(--line);border-radius
 .body{min-width:0}
 .body p{margin:0 0 10px;max-width:68ch}
 .body ul{margin:0 0 10px;padding-left:20px;max-width:68ch}
-.files{display:flex;flex-wrap:wrap;gap:8px}
-.files a{display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;color:var(--ink);text-decoration:none}
-.files a:hover{border-color:var(--green)}
-.files button.held{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:14px;padding:8px 12px;border:1px dashed var(--line);border-radius:9px;background:none;color:var(--muted);cursor:pointer}
-.files button.held:hover{color:var(--green);border-color:var(--green)}
-.files button.held span{font-family:var(--f-mono);font-size:11px}
+.files{display:flex;flex-direction:column;gap:10px;margin:12px 0 14px}
+.file{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:12px;background:var(--green-tint);border:1px solid var(--green)}
+.fico{flex:none;font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.04em;padding:6px 8px;border-radius:7px;background:var(--green);color:#fff}
+.fname{flex:1 1 220px;font-size:15px;font-weight:600;color:var(--ink);line-height:1.35}
+.fact{display:flex;gap:8px;flex-wrap:wrap}
+.file a,.file button{display:inline-flex;align-items:center;font:inherit;font-size:14px;font-weight:700;padding:10px 16px;border-radius:9px;text-decoration:none;cursor:pointer;white-space:nowrap}
+.file a.dl,.file button.held{background:var(--green-bright);color:#302E33;border:1px solid var(--green-bright)}
+.file a.dl:hover,.file button.held:hover{filter:brightness(.93)}
+.file a.open{background:var(--surface);color:var(--ink);border:1px solid var(--line);font-weight:600}
 #req{position:fixed;inset:0;background:rgba(20,20,24,.45);display:grid;place-items:center;padding:16px;z-index:10}
 #req .card{background:var(--surface);color:var(--ink);border-radius:14px;padding:22px;max-width:420px;width:100%;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
 #req h3{margin:0;font-size:17px}
@@ -100,8 +103,7 @@ section.sec{background:var(--surface);border:1px solid var(--line);border-radius
 #req button{font:inherit;font-size:14px;font-weight:600;padding:9px 14px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
 #req button.go{background:var(--green);border-color:var(--green);color:#fff}
 #req .msg{font-size:13px}
-.files a.dl{color:var(--green);font-weight:600}
-.files a span{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.file a.open:hover{border-color:var(--green)}
 .meta{font-size:12.5px;color:var(--muted)}
 .err{color:var(--red);font-size:13px}
 a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
@@ -378,12 +380,12 @@ function head(n,lvl){
   const st=lvl==="l1"&&n.children?nodeStatus(n):statusOf(n);
   const title=lvl==="l1"?`<h3 class="l1" id="h-${n.id}">${esc(n.title)}</h3>`:`<h4>${esc(n.title)}</h4>`;
   const body=n.html?`<div class="body">${n.html}</div>`:"";
-  const files=n.files.length?`<div class="files">${n.files.map(f=>WITHHELD.has(f.path)?`<button type="button" class="held" data-doc="${esc(f.label)}">${esc(f.label)} <span>PDF</span> — запросить</button>`:`<a href="${esc(f.path)}" target="_blank" rel="noopener">${esc(f.label)} <span>PDF</span></a><a class="dl" href="${esc(f.path)}" download>Скачать</a>`).join("")}</div>`:"";
+  const files=n.files.length?`<div class="files">${n.files.map(f=>WITHHELD.has(f.path)?`<div class="file"><span class="fico">PDF</span><span class="fname">${esc(f.label)}</span><span class="fact"><button type="button" class="held" data-doc="${esc(f.label)}">Запросить документ</button></span></div>`:`<div class="file"><span class="fico">PDF</span><span class="fname">${esc(f.label)}</span><span class="fact"><a class="dl" href="${esc(f.path)}" download>Скачать PDF</a><a class="open" href="${esc(f.path)}" target="_blank" rel="noopener">Открыть</a></span></div>`).join("")}</div>`:"";
   const a=state.approvals[n.id], own=statusOf(n);
   const meta=[n.edited?`Редакция от ${esc(n.edited)}`:"", own==="ok"?`Согласовано ${fmt(a.at)}`:"", own==="changed"?`Было согласовано ${fmt(a.at)}, после этого изменилось`:"", state.errors[n.id]?`<span class="err">${esc(state.errors[n.id])}</span>`:""].filter(Boolean).join(" · ");
   return `<div class="sec-head"><div class="sec-title"><span class="num">${n.num}</span>${title}</div>
       <span class="right"><span class="pill s-${st}">${LABEL[st]}</span>${n.hasContent?tick(n):""}</span></div>
-    ${n.ask?`<p class="ask">${esc(n.ask)}</p>`:""}${body}${files}${meta?`<div class="meta">${meta}</div>`:""}`;
+    ${files}${n.ask?`<p class="ask">${esc(n.ask)}</p>`:""}${body}${meta?`<div class="meta">${meta}</div>`:""}`;
 }
 
 render();
