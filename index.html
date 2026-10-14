@@ -88,7 +88,8 @@ section.sec{background:var(--surface);border:1px solid var(--line);border-radius
 .files{display:flex;flex-wrap:wrap;gap:8px}
 .files a{display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;color:var(--ink);text-decoration:none}
 .files a:hover{border-color:var(--green)}
-.files .held{display:inline-flex;gap:8px;font-size:14px;padding:8px 12px;border:1px dashed var(--line);border-radius:9px;color:var(--muted)}
+.files a.held{border-style:dashed;color:var(--muted)}
+.files a.held:hover{color:var(--green);border-color:var(--green)}
 .files a.dl{color:var(--green);font-weight:600}
 .files a span{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 .meta{font-size:12.5px;color:var(--muted)}
@@ -367,7 +368,7 @@ function head(n,lvl){
   const st=lvl==="l1"&&n.children?nodeStatus(n):statusOf(n);
   const title=lvl==="l1"?`<h3 class="l1" id="h-${n.id}">${esc(n.title)}</h3>`:`<h4>${esc(n.title)}</h4>`;
   const body=n.html?`<div class="body">${n.html}</div>`:"";
-  const files=n.files.length?`<div class="files">${n.files.map(f=>WITHHELD.has(f.path)?`<span class="held">${esc(f.label)} <span>PDF</span> — по запросу у лидера продукта</span>`:`<a href="${esc(f.path)}" target="_blank" rel="noopener">${esc(f.label)} <span>PDF</span></a><a class="dl" href="${esc(f.path)}" download>Скачать</a>`).join("")}</div>`:"";
+  const files=n.files.length?`<div class="files">${n.files.map(f=>WITHHELD.has(f.path)?`<a class="held" href="mailto:inna.mitina@ramax.ru?subject=${encodeURIComponent("Запрос документа: "+f.label)}&body=${encodeURIComponent("Добрый день! Прошу прислать документ «"+f.label+"» из плана продвижения DPrice.")}">${esc(f.label)} <span>PDF</span> — запросить на inna.mitina@ramax.ru</a>`:`<a href="${esc(f.path)}" target="_blank" rel="noopener">${esc(f.label)} <span>PDF</span></a><a class="dl" href="${esc(f.path)}" download>Скачать</a>`).join("")}</div>`:"";
   const a=state.approvals[n.id], own=statusOf(n);
   const meta=[n.edited?`Редакция от ${esc(n.edited)}`:"", own==="ok"?`Согласовано ${fmt(a.at)}`:"", own==="changed"?`Было согласовано ${fmt(a.at)}, после этого изменилось`:"", state.errors[n.id]?`<span class="err">${esc(state.errors[n.id])}</span>`:""].filter(Boolean).join(" · ");
   return `<div class="sec-head"><div class="sec-title"><span class="num">${n.num}</span>${title}</div>
