@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>План продвижения DPrice</title>
+<style>:root{color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head><body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column. Decisions first, then a clickable mini-map of the hierarchy, then the sections from general to specific. */
+:root{
+  --bg:#F6F8FB; --surface:#FFFFFF; --ink:#302E33; --muted:#6A6670; --line:#E2E6EC;
+  --green:#1FA45A; --green-bright:#3FDE84; --green-tint:#E6F8EE;
+  --amber:#A86A00; --amber-tint:#FFF4DC; --red:#C23B3B; --red-tint:#FDECEC; --grey-tint:#EEF0F4;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1B1A1E; --surface:#242328; --ink:#EAEFF5; --muted:#A39FA8; --line:#38363D;
+  --green:#3FDE84; --green-bright:#3FDE84; --green-tint:#1E3A2A;
+  --amber:#F2B640; --amber-tint:#3A2F18; --red:#F07A7A; --red-tint:#3D2224; --grey-tint:#2E2D33; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1B1A1E; --surface:#242328; --ink:#EAEFF5; --muted:#A39FA8; --line:#38363D;
+  --green:#3FDE84; --green-bright:#3FDE84; --green-tint:#1E3A2A;
+  --amber:#F2B640; --amber-tint:#3A2F18; --red:#F07A7A; --red-tint:#3D2224; --grey-tint:#2E2D33; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:34px}
+header{display:flex;flex-direction:column;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-.01em}
+.mark{width:26px;height:26px;position:relative}
+.mark i{position:absolute;border:3px solid var(--green-bright);border-radius:50%;width:11px;height:11px;top:1px;left:1px}
+.mark b{position:absolute;width:3px;height:30px;background:var(--muted);left:11px;top:-2px;transform:rotate(38deg);border-radius:2px}
+.mark u{position:absolute;border:3px solid var(--ink);border-radius:50%;width:11px;height:11px;bottom:1px;right:1px}
+h1{font-size:clamp(28px,5vw,38px);line-height:1.15;margin:0;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+.lede{color:var(--muted);margin:0;max-width:64ch}
+.block-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.block-title h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.count{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+.kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.decisions{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;scroll-margin-top:16px}
+.dec{display:grid;grid-template-columns:auto auto 1fr;gap:4px 14px;padding:18px 20px;border-top:1px solid var(--line);scroll-margin-top:16px}
+.dec:first-child{border-top:0}
+.dec .tick{grid-row:span 2;align-self:start;margin-top:2px}
+.dec .n{grid-row:span 2;font-family:var(--f-mono);color:var(--muted);font-size:15px;padding-top:1px;font-variant-numeric:tabular-nums}
+.dec h3{margin:0;font-size:17px;line-height:1.35;font-weight:650;text-wrap:balance;min-width:0}
+.dec .why{margin:0;color:var(--muted);font-size:15px;max-width:66ch;min-width:0}
+.dec .why p{margin:0 0 6px}
+.state{font-size:12.5px;margin-top:6px}
+.tick{width:24px;height:24px;border-radius:7px;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;padding:0;color:transparent;flex:none}
+.tick.on{background:var(--green);border-color:var(--green);color:#fff}
+.tick.changed{border-color:var(--red)}
+button.tick{cursor:pointer}
+button.tick:hover{border-color:var(--green)}
+button.tick:disabled{opacity:.5;cursor:default}
+.tick svg{width:14px;height:14px}
+.st-ok{color:var(--green)} .st-changed{color:var(--red)} .st-wait{color:var(--muted)}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.map-node{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.map a{color:var(--ink);text-decoration:none;display:flex;gap:8px;align-items:baseline;line-height:1.3}
+.map a:hover{color:var(--green)}
+.map .top{font-weight:650;font-size:14.5px}
+.map .child{font-size:13px;color:var(--muted);padding-left:14px}
+.map .child:hover{color:var(--green)}
+.map .num{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);flex:none}
+.dot{width:7px;height:7px;border-radius:50%;flex:none;background:var(--line);align-self:center}
+.dot.s-ok{background:var(--green)} .dot.s-wait{background:var(--amber)} .dot.s-changed{background:var(--red)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.sections{display:flex;flex-direction:column;gap:16px}
+section.sec{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.sub{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;scroll-margin-top:16px}
+.sec-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.sec-title{display:flex;gap:12px;align-items:baseline;min-width:0}
+.sec-title .num{font-family:var(--f-mono);color:var(--muted);font-size:14px}
+.sec h3.l1{margin:0;font-size:20px;line-height:1.25;font-weight:650;text-wrap:balance}
+.sub h4{margin:0;font-size:16px;font-weight:650}
+.pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap;background:var(--grey-tint);color:var(--muted)}
+.pill.s-ok{background:var(--green-tint);color:var(--green)}
+.pill.s-wait{background:var(--amber-tint);color:var(--amber)}
+.pill.s-changed{background:var(--red-tint);color:var(--red)}
+.right{display:flex;gap:10px;align-items:center}
+.ask{margin:0;font-size:14px;color:var(--muted);max-width:68ch}
+.body{min-width:0}
+.body p{margin:0 0 10px;max-width:68ch}
+.body ul{margin:0 0 10px;padding-left:20px;max-width:68ch}
+.files{display:flex;flex-wrap:wrap;gap:8px}
+.files a{display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;color:var(--ink);text-decoration:none}
+.files a:hover{border-color:var(--green)}
+.files .held{display:inline-flex;gap:8px;font-size:14px;padding:8px 12px;border:1px dashed var(--line);border-radius:9px;color:var(--muted)}
+.files a.dl{color:var(--green);font-weight:600}
+.files a span{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.meta{font-size:12.5px;color:var(--muted)}
+.err{color:var(--red);font-size:13px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+@media (max-width:520px){section.sec{padding:16px}.dec{padding:16px;gap:4px 10px}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand"><span class="mark" aria-hidden="true"><i></i><b></b><u></u></span>dprice</div>
+    <h1>План продвижения DPrice</h1>
+    <p class="lede">Согласование идёт по почте, здесь фиксируется результат. Отметку «Согласовано» ставит только автор документа. Если согласованный пункт меняется, отметка снимается сама.</p>
+  </header>
+
+  <nav aria-label="Карта документа">
+    <div class="block-title"><h2>Карта</h2><span class="kicker">от общего к частному</span></div>
+    <div class="map" id="map"></div>
+    <div class="legend">
+      <span><i style="background:var(--green)"></i>Согласовано</span>
+      <span><i style="background:var(--amber)"></i>В работе</span>
+      <span><i style="background:var(--red)"></i>Изменено после согласования</span>
+      <span><i style="background:var(--line)"></i>Готовится</span>
+    </div>
+  </nav>
+
+  <div>
+    <div class="block-title"><h2>Ключевые решения</h2><span class="count" id="decCount"></span></div>
+    <ol class="decisions" id="decisions"></ol>
+  </div>
+
+
+  <main class="sections" id="sections"></main>
+</div>
+
+<script>
+/* ============ КЛЮЧЕВЫЕ РЕШЕНИЯ — новое решение добавляется в конец, номер ставится сам ============ */
+const DECISIONS = [
+  { id:"d-markets",
+    title:"Идём на рынки стран Персидского залива и Юго-Восточной Азии. Россия — по остаточному принципу.",
+    why:`<p>Вся активная работа по продвижению идёт на страны Залива и ЮВА.</p>
+<p>В России продвижение приостановлено с июня 2026. Отвечаем на входящие запросы, сами новых клиентов не ищем и продукт под российский рынок не дорабатываем.</p>` },
+  { id:"d-goal",
+    title:"Цель — три платных клиента в сумме по всем рынкам.",
+    why:`<p>Считаем общее число по странам Залива и ЮВА вместе, без отдельной цели для каждой страны. Клиент засчитывается, когда подписан платный договор.</p>` },
+  { id:"d-name",
+    title:"Прорабатываем вопрос с названием продукта.",
+    why:`<p>Проверяем, подходит ли название DPrice для рынков Залива и ЮВА. По итогам либо оставляем его, либо меняем. Подробности — в разделе «Название и слоган».</p>` },
+  { id:"d-infofield",
+    title:"Приводим в порядок информационное поле: из открытых источников должно быть однозначно понятно, чей это продукт.",
+    why:`<p>Сейчас в сети DPrice связывают с разными компаниями: RAMAX, Advantix, «Иннодата» и другими. Публикации противоречат друг другу, и клиент не может понять, кто стоит за продуктом и с кем он будет заключать договор.</p>
+<p>Решаем, от чьего имени продукт представлен на каждом рынке, собираем перечень всех мест, где упоминается DPrice, и исправляем то, что противоречит решению.</p>` },
+  { id:"d-free",
+    title:"Бесплатный период возможен только как часть платного договора.",
+    why:`<p>Отдельно от договора бесплатный период не предлагаем. Если клиенту нужно время на проверку, оно закладывается в платный договор.</p>` },
+  { id:"d-approval",
+    title:"Все материалы согласуются один раз.",
+    why:`<p>Презентации, письма, тексты для сайта и соцсетей согласуются по почте один раз. После согласования материал используется без повторного согласования.</p>
+<p>Новое согласование нужно, только если материал изменился.</p>` }
+];
+
+/* ============ ИЕРАРХИЯ — новый раздел или подраздел добавляется в TREE или в children; карта и номера обновляются сами ============ */
+const TREE = [
+  { id:"lessons", title:"Уроки прошлого", ask:"Что делали с продуктом в 2024–2026 годах, что из этого вышло и почему. Из этого следуют решения и правила работы в Заливе и ЮВА.",
+    edited:"13.10.2026",
+    children:[
+      { id:"less-why", title:"Почему DPrice не продавался", ask:"Исследование на фактах: хронология, воронка, пилоты, причины по шкале достоверности.", edited:"13.10.2026",
+        files:[{label:"DPrice: почему продукт не продаётся — исследование на фактах", path:"pdf/DPrice_Failure_Analysis_v25.pdf"}],
+        html:`<ul>
+<li><b>Итог 2024–2026:</b> три пилота и ни одной покупки. Единственные деньги от клиента — 300 тыс. ₽ за платный тест в марте 2026 года.</li>
+<li><b>Базовая причина:</b> эффект нельзя доказать результатом продаж даже после полной продажи объекта. Нужен отдельный процесс убеждения клиента. Он разработан, но в продажах не применялся.</li>
+<li><b>Говорили не с теми:</b> разговор шёл с отделами ценообразования, с первым лицом была одна встреча за два года.</li>
+<li><b>Обращения были составлены неверно:</b> формула и обещания вместо денег проекта, тексты не согласовывались.</li>
+<li><b>Пилоты без конца:</b> шли полгода и полтора года вместо трёх месяцев и застревали на данных клиента.</li>
+<li><b>Причины отказов никто не записывал,</b> поэтому всё, что не цифры, оценено по шкале достоверности.</li>
+</ul>` },
+      { id:"less-crm", title:"Выгрузка из CRM", ask:"Обезличенная сводка по 633 записям воронки DPrice.", edited:"13.10.2026",
+        files:[{label:"Выгрузка CRM по DPrice: сводка", path:"pdf/DPrice_CRM_Summary_v1.pdf"}],
+        html:`<p>633 записи, ни одной закрытой сделки; 590 из них — массовая база, загруженная в апреле 2025 года. Поля «Источник» и «Причина утери сделки» не заполнены ни разу. Дальше загрузки в базу продвинулись 30 компаний, до пилота дошли две.</p>
+<p class="meta">В сводке нет имён сотрудников и контактных лиц, телефонов, адресов почты и комментариев.</p>` },
+      { id:"less-rules", title:"Что меняем", ask:"Правила работы, которые следуют из прошлых неудач.", edited:"13.10.2026",
+        html:`<ul>
+<li><b>Говорим с теми, кто решает:</b> первые лица и коммерческие директора. Возможность засчитываем, только если в разговоре есть владелец результата.</li>
+<li><b>Пилот — договор на один проект</b> с датой окончания, метрикой результата и решением «покупаем или нет».</li>
+<li><b>Метрику и исходные цены фиксируем до старта.</b> Скидки и акции во время пилота записываем отдельно.</li>
+<li><b>Шаблон данных для пилота — до договора.</b></li>
+<li><b>В центре — деньги проекта,</b> без формул. Все тексты согласуются до отправки.</li>
+<li><b>Доказываем эффективность процессом убеждения клиента,</b> а не результатом продаж.</li>
+<li><b>Причину каждого отказа записываем.</b></li>
+</ul>` }
+    ]},
+  { id:"competitors", title:"Конкуренты и альтернативы", ask:"Кто ещё решает задачу застройщика и чем он пользуется сейчас. На этом строятся позиционирование и отличия.",
+    edited:"13.10.2026",
+    html:`<p><b>Главное.</b> Готового ценового продукта для застройщиков, который уже работает в Заливе и ЮВА, нет. Это окно «никто ещё не сделал», а не «никто не сделает»: системы бронирования и порталы могут добавить цену у себя. Соперничаем прежде всего с привычкой — комитетом, Excel и брокером, который советует цену за комиссию.</p>
+<p><b>До любых переговоров закрыть:</b> ссылку РБК на «применение в ОАЭ и Таиланде» (это наше интервью, не отзыв клиента), противоречие «рыночные данные» против «только ваши данные» (исправлять в самих публикациях), единый бренд и домен dprice.ai.</p>`,
+    children:[
+      { id:"comp-gulf", title:"Страны Персидского залива", ask:"Прямые конкуренты, близкие аналоги и системы продаж застройщиков в регионе.", edited:"13.10.2026",
+        files:[{label:"Конкуренты DPrice: страны Персидского залива", path:"pdf/DPrice_Competitors_Gulf_v3.pdf"}],
+        html:`<ul>
+<li><b>Порядок:</b> ОАЭ — первый пилот; Саудовская Аравия — отношения сейчас, продажи после результата в ОАЭ; Катар, Оман, Бахрейн, Кувейт — наблюдение.</li>
+<li><b>Ближайшие угрозы:</b> Onyx (Канада, через партнёра), Aqarmap в Эр-Рияде с «ИИ-ценой» в пакете эксклюзивной продажи, системы продаж Alnair, Retyn и другие, которые могут добавить цену.</li>
+<li><b>Партнёры:</b> fäm Properties, Devmark, One Broker Group, Knight Frank; в Саудовской Аравии — Aqarmap.</li>
+<li><b>Кто решает о цене:</b> коммерческий и генеральный директор при выпуске каждой партии; аналитик готовит рекомендацию в Excel и CRM.</li>
+</ul>` },
+      { id:"comp-sea", title:"Юго-Восточная Азия", ask:"Прямые конкуренты, близкие аналоги и системы продаж застройщиков в регионе.", edited:"13.10.2026",
+        files:[{label:"Конкуренты DPrice: Юго-Восточная Азия", path:"pdf/DPrice_Competitors_SEA_v2.pdf"}],
+        html:`<ul>
+<li><b>Порядок (рабочая гипотеза):</b> Филиппины, Вьетнам, Малайзия → Таиланд → Индонезия → Сингапур последним; Камбоджа — наблюдение.</li>
+<li><b>Местного ценового продукта нет.</b> Скрытые угрозы: MHub и порталы с воронкой бронирования, Meey Group после выхода на биржу, возвращение PropertyGuru.</li>
+<li><b>Каналы:</b> MHub (Малайзия), Aiksol360 и PinasProperty (Филиппины), дистрибьюторы во Вьетнаме, ассоциации REHDA, SHDA, HBA, HoREA.</li>
+<li><b>Нужно добрать:</b> кто решает о цене у топ-3 застройщиков Филиппин, Вьетнама и Малайзии — в разговорах.</li>
+</ul>` },
+      { id:"comp-world", title:"Мир", ask:"Мировые аналоги и их опыт: кто продаёт похожий продукт и как.", edited:"13.10.2026",
+        files:[{label:"Конкуренты DPrice: мировой рынок", path:"pdf/DPrice_Competitors_World_v2.pdf"}],
+        html:`<ul>
+<li><b>Полного аналога нет,</b> но «первым» DPrice назвать нельзя: YIT (2018), Maxify (2020), Profitbase, BAE Global.</li>
+<li><b>Рынок консолидируется:</b> CoStar купила Zonda с ценовым инструментом для домостроителей, Dubizzle — Property Monitor.</li>
+<li><b>Сильный довод:</b> модель на данных одного застройщика снимает антимонопольный риск, за который в США наказали RealPage.</li>
+</ul>` },
+      { id:"comp-now", title:"Чем застройщик пользуется сейчас", ask:"Таблицы, комитет по ценам, модули цен в системах продаж — с чем на самом деле сравнивают DPrice.", edited:"13.10.2026",
+        html:`<ol>
+<li>Стартовая цена — от цен конкурентов и финансовой модели проекта.</li>
+<li>График повышения по стадиям стройки или очередям.</li>
+<li>Коэффициенты по этажу, виду и планировке.</li>
+<li>Ежемесячный коммерческий комитет: темп против плана, решения о цене, скидках, рассрочках.</li>
+<li>Изменения — в CRM и брокерам.</li>
+</ol>
+<p>Специальной системы для расчёта цены у целевых застройщиков не видно: CRM, учётные системы и Excel. DPrice сравнивают с комитетом и таблицей, а не с другим продуктом.</p>
+<p><b>Почему это работает плохо.</b> Финансовый отдел пересматривает планы раз в месяц или квартал, команда ценообразования ставит цены раз в неделю, а коммерческий отдел видит спрос каждый день. Решения принимаются на данных разной свежести. DPrice сводит темп продаж и цену в один расчёт.</p>` }
+    ]},
+  { id:"positioning", title:"Позиционирование", ask:"Для кого продукт, какую задачу решает и почему клиенту стоит поверить.",
+    edited:"13.10.2026",
+    files:[{label:"Позиционирование DPrice: как сейчас", path:"pdf/DPrice_Positioning_Current_v3.pdf"}],
+    children:[
+      { id:"pos-current", title:"Как сейчас", ask:"Анализ текущего позиционирования: сайты, публикации и согласованная презентация для ОАЭ.", edited:"13.10.2026",
+        html:`<ul>
+<li><b>Нет единого описания.</b> Продукт называют пятью способами: динамическое, оптимальное и интеллектуальное ценообразование, управление доходностью, индексация цен.</li>
+<li><b>Цифры эффекта расходятся</b> (3%, 1–5%, 3–7%, 3–10%), и подтвердить их в Заливе пока нечем.</li>
+<li><b>Главный денежный аргумент из России</b> — экономия на проектном финансировании. В Дубае стройка во многом идёт на деньги покупателей через эскроу-счета, поэтому аргумент нужно проверить.</li>
+<li><b>Не выбран покупатель:</b> сайт обращается сразу к первым лицам, коммерческому блоку и аналитикам.</li>
+<li><b>Согласованная презентация рассказывает о методе, а не о клиенте.</b> В ней нет слайдов о задаче застройщика, о том, как начать, и о доказательствах. DPrice в ней то максимизирует прибыль, то выручку. В тренажёре рубли и метры, на графиках русские подписи.</li>
+<li><b>Что сохранить:</b> «наука ценообразования», оптимальную кривую продаж, рекомендацию по каждой квартире, решение за командой клиента.</li>
+</ul>
+<p><b>Предложение:</b> позиционировать DPrice как управление доходностью проекта для застройщиков. Обещать не процент, а расчёт на данных клиента и заранее согласованный способ измерить результат. Три целостных варианта сравниваются в PDF.</p>` },
+      { id:"pos-client", title:"Клиент и кто принимает решение", ask:"Какие компании и какие люди в них решают о покупке." },
+      { id:"pos-problem", title:"Задача клиента и наше обещание", ask:"Что у клиента болит и что DPrice меняет в деньгах." },
+      { id:"pos-proof", title:"Отличие и доказательства", ask:"Чем отличаемся от того, что клиент делает сейчас, и чем это подтверждаем." }
+    ]},
+  { id:"name", title:"Название и слоган", ask:"Как называем продукт на рынке и одна фраза о том, зачем он. Следует из решения 3.",
+    edited:"13.10.2026",
+    files:[{label:"Название DPrice: анализ и варианты", path:"pdf/DPrice_Naming_Analysis_v3.pdf"}],
+    children:[
+      { id:"name-options", title:"Что делаем с названием", ask:"Выбор одного из трёх вариантов.", edited:"13.10.2026",
+        html:`<ul>
+<li><b>Вариант 1. Оставить DPrice и навести порядок.</b> Быстро и почти без расходов, но слово плохо защищается и плохо ищется, а в поиске остаётся российская история.</li>
+<li><b>Вариант 2. Новое название для Залива и ЮВА, DPrice остаётся в России.</b> История за рубежом начинается без противоречий. Подбор и проверка займут 6–10 недель.</li>
+<li><b>Вариант 3. Новое название везде.</b> Придётся тратить силы на российский рынок, который на паузе. Не рекомендуется.</li>
+</ul>
+<p><b>Рекомендация — вариант 2,</b> в два шага: сначала позиционирование, потом подбор названия под него. До подачи на товарный знак нужно выяснить, кому принадлежат права на продукт.</p>` },
+      { id:"name-check", title:"Звучание и защита: мир, Залив, ЮВА", ask:"Как слово DPrice работает на каждом рынке.", edited:"13.10.2026",
+        html:`<ul>
+<li><b>Мир.</b> «D. Price» читается как имя человека: dprice.com с 1998 года занят американской фирмой David Price &amp; Associates. Буква D не расшифровывается, а слово price описывает только функцию. Поэтому название плохо ищется и слабо защищается.</li>
+<li><b>Залив.</b> В арабском нет звука «п», и в речи название звучит как «Ди-брайс». Закон ОАЭ разрешает отказывать в регистрации описательных обозначений, так что есть риск отказа.</li>
+<li><b>ЮВА.</b> По-тайски «ди» значит «хороший», и название звучит как «хорошая цена». В большинстве стран региона знак получает тот, кто первым подал заявку.</li>
+</ul>` },
+      { id:"name-principle", title:"Принцип: как называть", ask:"Требования к названию продукта.", edited:"13.10.2026",
+        html:`<p>Название обещает результат для владельца и коммерческого директора, а не описывает функцию. Требования:</p>
+<ul>
+<li>Говорит о результате, без слова price.</li>
+<li>Понятно без расшифровки.</li>
+<li>Коротко: два-три слога, легко продиктовать.</li>
+<li>Звучит одинаково на всех рынках, в том числе без звуков «п» и «в», которых нет в арабском.</li>
+<li>Не похоже на имя человека, лекарство или чужой бренд.</li>
+<li>Не описывает товар напрямую, чтобы знак можно было зарегистрировать.</li>
+<li>Без религиозных и национальных отсылок.</li>
+<li>Свободны домен, LinkedIn и товарный знак.</li>
+<li>Работает в паре с подписью «The Science of Pricing».</li>
+<li>Регистрируется на одну компанию — ту, что подписывает договоры.</li>
+</ul>` },
+      { id:"name-slogan", title:"Слоган", ask:"Одна фраза о том, зачем продукт. Подбирается вместе с названием." }
+    ]},
+  { id:"offer", title:"Предложение клиенту", ask:"Что клиент покупает, как платит, как начать и как выйти." },
+  { id:"infofield", title:"Информационное поле", ask:"Как продукт выглядит в открытых источниках. Следует из решения 4.",
+    children:[
+      { id:"if-owner", title:"Кто представляет продукт", ask:"От чьего имени продукт выступает на каждом рынке." },
+      { id:"if-audit", title:"Где сейчас упоминается DPrice", ask:"Перечень публикаций, сайтов и страниц с противоречиями и что делаем с каждой.", edited:"13.10.2026",
+        html:`<p>Главное из проверки открытых источников. Подробности — в PDF раздела «Название и слоган».</p>
+<ul>
+<li><b>Три «хозяина».</b> RAMAX (dprice.ru, РБК), «Иннодата» (своя страница DPrice, каталог Soware, реестр российского ПО № 15259). В Khaleej Times компания не названа вовсе. Связи с Advantix в открытых источниках нет.</li>
+<li><b>Два описания продукта.</b> У «Иннодаты» это автоматическая индексация цен, у RAMAX — динамическое ценообразование с учётом проектного финансирования.</li>
+<li><b>Заявления «первые» и «первые в мире».</b> Легко опровергаются.</li>
+<li><b>Разные цифры эффекта.</b> На сайте «+3% выручки», в РБК «3–10% от выручки», рядом с DPrice в Khaleej Times отраслевые 15–30%.</li>
+<li><b>Домен dprice.ai истёк,</b> на нём заглушка GoDaddy.</li>
+<li><b>На dprice.ru нет контактов и юрлица,</b> политики персональных данных лежат на Яндекс Диске.</li>
+</ul>` },
+      { id:"if-site", title:"Сайт dprice.ai", ask:"Тексты главной страницы." },
+      { id:"if-linkedin", title:"LinkedIn", ask:"Страница продукта и профили людей, которые его представляют." }
+    ]},
+  { id:"materials", title:"Материалы для клиента", ask:"Что клиент получает в руки. Открываются в PDF.",
+    children:[
+      { id:"mat-deck", title:"Презентация для первой встречи", ask:"" },
+      { id:"mat-onepager", title:"Одностраничник", ask:"" }
+    ]},
+  { id:"letters", title:"Письма и сообщения", ask:"Первое письмо, повторные письма, сообщения в LinkedIn и мессенджерах, сценарий звонка." },
+  { id:"actions", title:"План действий и расходы", ask:"Сколько писем, звонков и встреч в неделю, кто что делает, сроки и расходы по шагам." },
+  { id:"control", title:"Как поймём, что работает", ask:"Какие цифры смотрим каждую неделю и при каком результате останавливаемся или меняем подход." }
+];
+/* У узла могут быть: html, files ([{label, path:"pdf/....pdf"}]), edited ("ДД.ММ.ГГГГ"). Узел без html и файлов — «Готовится». */
+
+/* ============ МЕХАНИКА ============ */
+function hashOf(s){ let h=0x811c9dc5; for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)} return (h>>>0).toString(16).padStart(8,"0"); }
+DECISIONS.forEach(d=>{ d.hash=hashOf(JSON.stringify([d.title,d.why])); d.hasContent=true; });
+const NODES=[];
+(function walk(list,prefix){ list.forEach((n,i)=>{ n.num=prefix?prefix+"."+(i+1):String(i+1); n.files=n.files||[]; n.html=n.html||"";
+  n.hasContent=!!(n.html||n.files.length); n.hash=hashOf(JSON.stringify([n.title,n.ask,n.html,n.files])); NODES.push(n);
+  if(n.children) walk(n.children,n.num); }); })(TREE,"");
+
+const WITHHELD=new Set(["pdf/DPrice_Failure_Analysis_v25.pdf","pdf/DPrice_CRM_Summary_v1.pdf"]);
+const state={ approvals:{}, db:null, isOwner:false, busy:{}, errors:{} };
+const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=t=>{ try{ return new Date(t).toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric"}) }catch(e){ return "" } };
+function statusOf(x){ const a=state.approvals[x.id]; if(a&&a.hash===x.hash) return "ok"; if(a) return "changed"; return x.hasContent?"wait":"draft"; }
+function combine(list){
+  if(list.includes("changed")) return "changed";
+  if(list.every(s=>s==="ok")) return "ok";
+  if(list.every(s=>s==="draft")) return "draft";
+  return "wait";
+}
+function nodeStatus(n){
+  if(!n.children) return statusOf(n);
+  const all=n.children.map(nodeStatus); if(n.hasContent) all.push(statusOf(n));
+  return combine(all);
+}
+const LABEL={ok:"Согласовано",wait:"В работе",changed:"Изменено после согласования",draft:"Готовится"};
+const CHECK='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function tick(x){
+  const st=statusOf(x), on=st==="ok";
+  const cls=`tick${on?" on":""}${st==="changed"?" changed":""}`;
+  const label=on?"Снять отметку «Согласовано»":"Отметить «Согласовано»";
+  if(state.db && state.isOwner && x.hasContent)
+    return `<button class="${cls}" data-id="${x.id}" aria-pressed="${on}" aria-label="${label}" title="${label}" ${state.busy[x.id]?"disabled":""}>${CHECK}</button>`;
+  return `<span class="${cls}" role="img" aria-label="${LABEL[st]}">${CHECK}</span>`;
+}
+function stateLine(x){
+  const st=statusOf(x), a=state.approvals[x.id], err=state.errors[x.id]?` <span class="err">${esc(state.errors[x.id])}</span>`:"";
+  if(st==="ok") return `<div class="state st-ok">Согласовано ${fmt(a.at)}${err}</div>`;
+  if(st==="changed") return `<div class="state st-changed">Изменено после согласования от ${fmt(a.at)}${err}</div>`;
+  return `<div class="state st-wait">Не согласовано${err}</div>`;
+}
+function shortTitle(t){ const s=t.split(/[.:]/)[0]; return s.length>48?s.slice(0,46)+"…":s; }
+
+function render(){
+  const ok=DECISIONS.filter(d=>statusOf(d)==="ok").length;
+  document.getElementById("decCount").textContent=`согласовано ${ok} из ${DECISIONS.length}`;
+  document.getElementById("decisions").innerHTML=DECISIONS.map((d,i)=>`
+    <li class="dec" id="${d.id}">
+      ${tick(d)}<span class="n">${i+1}</span>
+      <h3>${esc(d.title)}</h3>
+      <div class="why">${d.why}${stateLine(d)}</div>
+    </li>`).join("");
+
+  document.getElementById("map").innerHTML=
+    `<div class="map-node"><a class="top" href="#decisions"><span class="dot s-${combine(DECISIONS.map(statusOf))}"></span>Ключевые решения</a>${
+      DECISIONS.map((d,i)=>`<a class="child" href="#${d.id}"><span class="dot s-${statusOf(d)}"></span><span class="num">${i+1}</span>${esc(shortTitle(d.title))}</a>`).join("")}</div>`+
+    TREE.map(n=>`<div class="map-node"><a class="top" href="#${n.id}"><span class="dot s-${nodeStatus(n)}"></span><span class="num">${n.num}</span>${esc(n.title)}</a>${
+      (n.children||[]).map(c=>`<a class="child" href="#${c.id}"><span class="dot s-${nodeStatus(c)}"></span><span class="num">${c.num}</span>${esc(c.title)}</a>`).join("")}</div>`).join("");
+
+  document.getElementById("sections").innerHTML=TREE.map(n=>`
+    <section class="sec" id="${n.id}" aria-labelledby="h-${n.id}">
+      ${head(n,"l1")}
+      ${(n.children||[]).map(c=>`<div class="sub" id="${c.id}">${head(c,"l2")}</div>`).join("")}
+    </section>`).join("");
+}
+function head(n,lvl){
+  const st=lvl==="l1"&&n.children?nodeStatus(n):statusOf(n);
+  const title=lvl==="l1"?`<h3 class="l1" id="h-${n.id}">${esc(n.title)}</h3>`:`<h4>${esc(n.title)}</h4>`;
+  const body=n.html?`<div class="body">${n.html}</div>`:"";
+  const files=n.files.length?`<div class="files">${n.files.map(f=>WITHHELD.has(f.path)?`<span class="held">${esc(f.label)} <span>PDF</span> — по запросу у лидера продукта</span>`:`<a href="${esc(f.path)}" target="_blank" rel="noopener">${esc(f.label)} <span>PDF</span></a><a class="dl" href="${esc(f.path)}" download>Скачать</a>`).join("")}</div>`:"";
+  const a=state.approvals[n.id], own=statusOf(n);
+  const meta=[n.edited?`Редакция от ${esc(n.edited)}`:"", own==="ok"?`Согласовано ${fmt(a.at)}`:"", own==="changed"?`Было согласовано ${fmt(a.at)}, после этого изменилось`:"", state.errors[n.id]?`<span class="err">${esc(state.errors[n.id])}</span>`:""].filter(Boolean).join(" · ");
+  return `<div class="sec-head"><div class="sec-title"><span class="num">${n.num}</span>${title}</div>
+      <span class="right"><span class="pill s-${st}">${LABEL[st]}</span>${n.hasContent?tick(n):""}</span></div>
+    ${n.ask?`<p class="ask">${esc(n.ask)}</p>`:""}${body}${files}${meta?`<div class="meta">${meta}</div>`:""}`;
+}
+
+render();
+fetch("approvals.json",{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(m=>{state.approvals=m||{};render();}).catch(()=>{});
+</script>
+
+</body></html>
