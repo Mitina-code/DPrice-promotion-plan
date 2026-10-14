@@ -88,8 +88,18 @@ section.sec{background:var(--surface);border:1px solid var(--line);border-radius
 .files{display:flex;flex-wrap:wrap;gap:8px}
 .files a{display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;color:var(--ink);text-decoration:none}
 .files a:hover{border-color:var(--green)}
-.files a.held{border-style:dashed;color:var(--muted)}
-.files a.held:hover{color:var(--green);border-color:var(--green)}
+.files button.held{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:14px;padding:8px 12px;border:1px dashed var(--line);border-radius:9px;background:none;color:var(--muted);cursor:pointer}
+.files button.held:hover{color:var(--green);border-color:var(--green)}
+.files button.held span{font-family:var(--f-mono);font-size:11px}
+#req{position:fixed;inset:0;background:rgba(20,20,24,.45);display:grid;place-items:center;padding:16px;z-index:10}
+#req .card{background:var(--surface);color:var(--ink);border-radius:14px;padding:22px;max-width:420px;width:100%;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+#req h3{margin:0;font-size:17px}
+#req p{margin:0;font-size:14px;color:var(--muted)}
+#req input{font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
+#req .row{display:flex;gap:8px;justify-content:flex-end}
+#req button{font:inherit;font-size:14px;font-weight:600;padding:9px 14px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+#req button.go{background:var(--green);border-color:var(--green);color:#fff}
+#req .msg{font-size:13px}
 .files a.dl{color:var(--green);font-weight:600}
 .files a span{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 .meta{font-size:12.5px;color:var(--muted)}
@@ -368,7 +378,7 @@ function head(n,lvl){
   const st=lvl==="l1"&&n.children?nodeStatus(n):statusOf(n);
   const title=lvl==="l1"?`<h3 class="l1" id="h-${n.id}">${esc(n.title)}</h3>`:`<h4>${esc(n.title)}</h4>`;
   const body=n.html?`<div class="body">${n.html}</div>`:"";
-  const files=n.files.length?`<div class="files">${n.files.map(f=>WITHHELD.has(f.path)?`<a class="held" href="mailto:inna.mitina@ramax.ru?subject=${encodeURIComponent("Запрос документа: "+f.label)}&body=${encodeURIComponent("Добрый день! Прошу прислать документ «"+f.label+"» из плана продвижения DPrice.")}">${esc(f.label)} <span>PDF</span> — запросить на inna.mitina@ramax.ru</a>`:`<a href="${esc(f.path)}" target="_blank" rel="noopener">${esc(f.label)} <span>PDF</span></a><a class="dl" href="${esc(f.path)}" download>Скачать</a>`).join("")}</div>`:"";
+  const files=n.files.length?`<div class="files">${n.files.map(f=>WITHHELD.has(f.path)?`<button type="button" class="held" data-doc="${esc(f.label)}">${esc(f.label)} <span>PDF</span> — запросить</button>`:`<a href="${esc(f.path)}" target="_blank" rel="noopener">${esc(f.label)} <span>PDF</span></a><a class="dl" href="${esc(f.path)}" download>Скачать</a>`).join("")}</div>`:"";
   const a=state.approvals[n.id], own=statusOf(n);
   const meta=[n.edited?`Редакция от ${esc(n.edited)}`:"", own==="ok"?`Согласовано ${fmt(a.at)}`:"", own==="changed"?`Было согласовано ${fmt(a.at)}, после этого изменилось`:"", state.errors[n.id]?`<span class="err">${esc(state.errors[n.id])}</span>`:""].filter(Boolean).join(" · ");
   return `<div class="sec-head"><div class="sec-title"><span class="num">${n.num}</span>${title}</div>
@@ -378,6 +388,18 @@ function head(n,lvl){
 
 render();
 fetch("approvals.json",{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(m=>{state.approvals=m||{};render();}).catch(()=>{});
+
+const REQ_ENDPOINT="https://formsubmit.co/ajax/inna.mitina@ramax.ru";
+document.body.insertAdjacentHTML("beforeend",`<div id="req" hidden role="dialog" aria-modal="true" aria-labelledby="req-t"><form class="card" id="req-f"><h3 id="req-t">Запросить документ</h3><p id="req-doc"></p><label for="req-who" style="font-size:13px;font-weight:600">Ваше имя или email</label><input id="req-who" required maxlength="120" autocomplete="email"><div class="msg" id="req-msg" aria-live="polite"></div><div class="row"><button type="button" id="req-x">Отмена</button><button type="submit" class="go" id="req-go">Отправить запрос</button></div></form></div>`);
+let reqDoc="";
+document.addEventListener("click",e=>{const b=e.target.closest("button.held[data-doc]"); if(!b) return; reqDoc=b.dataset.doc; document.getElementById("req-doc").textContent="«"+reqDoc+"». Запрос придёт лидеру продукта, документ пришлют вам."; document.getElementById("req-msg").textContent=""; document.getElementById("req-go").disabled=false; document.getElementById("req").hidden=false; document.getElementById("req-who").focus();});
+document.getElementById("req-x").onclick=()=>{document.getElementById("req").hidden=true};
+document.getElementById("req").addEventListener("click",e=>{if(e.target.id==="req") e.target.hidden=true});
+document.getElementById("req-f").addEventListener("submit",async e=>{e.preventDefault(); const who=document.getElementById("req-who").value.trim(); if(!who) return; const go=document.getElementById("req-go"), msg=document.getElementById("req-msg"); go.disabled=true; msg.style.color="var(--muted)"; msg.textContent="Отправляем…";
+ try{ const r=await fetch(REQ_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({"Документ":reqDoc,"Кто запросил":who,"Страница":location.href,_subject:"Запрос документа DPrice: "+reqDoc,_template:"table",_captcha:"false"})}); const j=await r.json().catch(()=>({})); if(!r.ok||String(j.success)==="false") throw new Error(j.message||r.status);
+  msg.style.color="var(--green)"; msg.textContent="Запрос отправлен. Документ пришлют вам."; setTimeout(()=>{document.getElementById("req").hidden=true},2500);
+ }catch(err){ msg.style.color="var(--red)"; msg.textContent="Не удалось отправить. Напишите на inna.mitina@ramax.ru."; go.disabled=false; }
+});
 </script>
 
 </body></html>
