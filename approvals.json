@@ -30,5 +30,17 @@
  "d-name": {
   "hash": "10faa8fd",
   "at": 1792481303977
+ },
+ "offer": {
+  "hash": "ae2ac738",
+  "at": 1792481637327
+ },
+ "offer-price": {
+  "hash": "9cd8fa64",
+  "at": 1792481637327
+ },
+ "offer-balance": {
+  "hash": "e8c1b5e4",
+  "at": 1792481637328
  }
 }
