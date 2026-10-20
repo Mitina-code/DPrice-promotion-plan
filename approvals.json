@@ -28,8 +28,8 @@
   "at": 1792329999810
  },
  "d-name": {
-  "hash": "10faa8fd",
-  "at": 1792481303977
+  "hash": "cc1420a5",
+  "at": 1792482233427
  },
  "offer": {
   "hash": "ae2ac738",
@@ -42,5 +42,21 @@
  "offer-balance": {
   "hash": "e8c1b5e4",
   "at": 1792481637328
+ },
+ "name": {
+  "hash": "aa68812d",
+  "at": 1792482233427
+ },
+ "name-options": {
+  "hash": "ce999b4c",
+  "at": 1792482233427
+ },
+ "name-check": {
+  "hash": "21d64df8",
+  "at": 1792482233427
+ },
+ "name-principle": {
+  "hash": "372f50a8",
+  "at": 1792482233427
  }
 }
